@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wisecow-deployment
+  labels:
+    app: wisecow
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wisecow
+  template:
+    metadata:
+      labels:
+        app: wisecow
+    spec:
+      containers:
+      - name: wisecow
+        image: geethgulabrathod/wisecow3:latest   # Replace with your image name if pushed to a registry
+        ports:
+        - containerPort: 4499
+        volumeMounts:
+        - name: wisecow-log
+          mountPath: /app/wisecow.log
+          subPath: wisecow.log
+      volumes:
+      - name: wisecow-log
+        emptyDir: {}
+
